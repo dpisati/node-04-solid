@@ -1,0 +1,128 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atlas API",
+        "description": "Essa eh uma documentacao do Atlas API",
+        "version": "1.0.0",
+        "contact": {
+            "name": "Atlas API",
+            "email": "atlas-api@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": ["users"],
+                "summary": "Lista todos os usuarios",
+                "description": "Essa rota lista todos os usuarios se o parametro user_id for valido.",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "An valid ID from an admin user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of users"
+                    },
+                    "404": {
+                        "description": "User not valid"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["users"],
+                "summary": "Create a user",
+                "description": "Create a new user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "obejct",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                },
+                                "example": {
+                                    "name": "Name",
+                                    "email": "abc@a.com"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User created"
+                    },
+                    "400": {
+                        "description": "User not created"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "summary": "Turn user an admin",
+                "tags": ["users"],
+                "operationId": "updateUser",
+                "description": "Turn user admin using its ID",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID of the user to update",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User is admin now"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "summary": "Return user profile",
+                "tags": ["users"],
+                "operationId": "userProfile",
+                "description": "Return the user profile with all details",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "ID of the user",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "User is admin now"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    }
+}
